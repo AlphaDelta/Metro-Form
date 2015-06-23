@@ -44,7 +44,7 @@ namespace Metro
         {
             SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw | ControlStyles.EnableNotifyMessage, true);
 
-            SetBounds();
+            UpdateBounds();
         }
 
         protected override void OnLoad(EventArgs e)
@@ -74,21 +74,22 @@ namespace Metro
             glow.Hide();
         }
 
-        Rectangle CaptionBounds, CaptionDragBounds, WindowBounds, btnClose;
-        const int buttonsize = 8, buttonwidth = 34, buttonxmid = (buttonwidth / 2 + buttonsize / 2 + 1);
-        void SetBounds()
+        Rectangle CaptionBounds, CaptionDragBounds, WindowBounds, btnClose, btnMaximize;
+        const int buttonsize = 8, buttonwidth = 34, buttonxmid = (buttonwidth / 2 + buttonsize / 2);
+        void UpdateBounds()
         {
             CaptionBounds = new Rectangle(0, 0, this.Width, 30);
             CaptionDragBounds = new Rectangle(0, 0, CaptionBounds.Width - (buttonwidth * capcontrols.Length), CaptionBounds.Height);
             WindowBounds = new Rectangle(0, 0, this.Width - 1, this.Height - 1);
 
             btnClose = new Rectangle(CaptionBounds.Width - buttonwidth, 0, buttonwidth, CaptionBounds.Height);
+            btnMaximize = new Rectangle(CaptionBounds.Width - buttonwidth * 2, 0, buttonwidth, CaptionBounds.Height);
         }
         protected override void OnResize(EventArgs e)
         {
             base.OnResize(e);
 
-            SetBounds();
+            UpdateBounds();
             if (glow != null) glow.Render();
         }
         protected override void OnLocationChanged(EventArgs e)
@@ -110,7 +111,7 @@ namespace Metro
             int midys = midy + 1;
 
             /* Close button */
-            int closex = this.Width - buttonxmid;
+            int closex = this.Width - buttonxmid - 1;
             if (capcontrols[0] == 2)
             {
                 e.Graphics.FillRectangle(ColorSchema.bCaptionControlsActive, btnClose);
@@ -128,6 +129,24 @@ namespace Metro
 
                 e.Graphics.DrawLine(ColorSchema.pCaptionControls, closex, midy, closex + buttonsize, midy + buttonsize);
                 e.Graphics.DrawLine(ColorSchema.pCaptionControls, closex, midy + buttonsize, closex + buttonsize, midy);
+            }
+
+            /* Maximize button */
+            e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.None;
+            int maximizex = this.Width - buttonwidth - buttonxmid;
+            if (capcontrols[1] == 2)
+            {
+                e.Graphics.FillRectangle(ColorSchema.bCaptionControlsActive, btnMaximize);
+
+                e.Graphics.DrawRectangle(ColorSchema.pCaptionControlsActive, maximizex, midys, 8, 8);
+            }
+            else
+            {
+                if (capcontrols[1] == 1)
+                    e.Graphics.FillRectangle(ColorSchema.bCaptionControlsHover, btnMaximize);
+                e.Graphics.DrawRectangle(ColorSchema.pCaptionControlsShadow, maximizex, midys + 1, 8, 8);
+
+                e.Graphics.DrawRectangle(ColorSchema.pCaptionControls, maximizex, midys, 8, 8);
             }
         }
 
@@ -163,6 +182,7 @@ namespace Metro
                 //System.Diagnostics.Debug.WriteLine(mouse.X + ":" + mouse.Y);
 
                 UpdateCaptionControl(0, (btnClose.Contains(mouse) ? 1 : 0));
+                UpdateCaptionControl(1, (btnMaximize.Contains(mouse) ? 1 : 0));
 
                 foreach (int b in capcontrols)
                     if (b != 0)
@@ -202,14 +222,26 @@ namespace Metro
             }
             else if (m.Msg == WinAPI.WM_NCLBUTTONUP)
             {
+                Point mouse = this.PointToClient(Cursor.Position);
+                if (btnClose.Contains(mouse) && capcontrols[0] == 2) { this.Close(); return; }
+                else if (btnMaximize.Contains(mouse) && capcontrols[1] == 2)
+                {
+                    this.WindowState = (this.WindowState == FormWindowState.Maximized ? FormWindowState.Normal : FormWindowState.Maximized);
+                    if (this.WindowState == FormWindowState.Maximized) glow.Hide();
+                    else glow.Show();
+
+                    return;
+                }
+
                 for (int i = 0; i < capcontrols.Length; i++)
-                    if (capcontrols[i] > 0) capcontrols[i]--;
+                    if (capcontrols[i] == 2) capcontrols[i] = 1;
                 this.Invalidate();
             }
             else if (m.Msg == WinAPI.WM_NCLBUTTONDOWN)
             {
                 Point mouse = this.PointToClient(Cursor.Position);
                 UpdateCaptionControl(0, (btnClose.Contains(mouse) ? 2 : 0));
+                UpdateCaptionControl(1, (btnMaximize.Contains(mouse) ? 2 : 0));
             }
             else if (m.Msg == WinAPI.WM_NCCALCSIZE && m.WParam.ToInt32() == 1)
             {
