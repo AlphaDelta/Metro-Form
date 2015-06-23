@@ -53,9 +53,9 @@ namespace Metro
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Sizable;
 
             glow = new MetroFormGlow(this);
-            glow.Show();
-            glow.Render();
-            this.Focus();
+            //glow.Show();
+            //glow.Render();
+            //this.Focus();
         }
 
         protected override void OnGotFocus(EventArgs e)
