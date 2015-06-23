@@ -7,44 +7,13 @@ namespace Metro
 {
     public class MetroForm : Form
     {
-        public static class ColorSchema
-        {
-            public static Color
-            cPrimaryLightLight = Color.FromArgb(0x80, 0xCB, 0xEB),
-            cPrimaryLight = Color.FromArgb(0x4F, 0xC8, 0xFC),
-            cPrimary = Color.FromArgb(0x41, 0xB1, 0xE1),
-            cPrimaryDark = Color.FromArgb(0x27, 0x6B, 0x87),
-            cPrimaryDarkDark = Color.FromArgb(0x08, 0x6F, 0x9E),
-
-            cSecondary = Color.FromArgb(0xFF, 0xFF, 0xFF);
-
-            public static SolidBrush
-            bCaption = new SolidBrush(cPrimary),
-            bWindow = new SolidBrush(cSecondary),
-            bCaptionTitle = new SolidBrush(cSecondary),
-            bCaptionControls = new SolidBrush(cPrimaryDark),
-            bCaptionControlsHover = new SolidBrush(cPrimaryLightLight),
-            bCaptionControlsActive = new SolidBrush(cPrimaryDarkDark),
-            bCaptionControlsShadow = new SolidBrush(cPrimaryLight);
-
-            public static Pen
-            pBorder = new Pen(cPrimary),
-            pCaptionControls = new Pen(cPrimaryDark, 2f),
-            pCaptionControlsActive = new Pen(cSecondary, 2f),
-            pCaptionControlsShadow = new Pen(cPrimaryLight, 2f);
-
-            public static void Update()
-            {
-
-            }
-        }
-
         MetroFormGlow glow = null;
+        ColorSchema ColorSchema = new ColorSchema();
         public MetroForm()
         {
-            SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw | ControlStyles.EnableNotifyMessage, true);
+            SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.EnableNotifyMessage, true);
 
-            UpdateBounds();
+            SetBounds();
         }
 
         protected override void OnLoad(EventArgs e)
@@ -76,7 +45,7 @@ namespace Metro
 
         Rectangle CaptionBounds, CaptionDragBounds, WindowBounds, btnClose, btnMaximize;
         const int buttonsize = 8, buttonwidth = 34, buttonxmid = (buttonwidth / 2 + buttonsize / 2);
-        void UpdateBounds()
+        void SetBounds()
         {
             CaptionBounds = new Rectangle(0, 0, this.Width, 30);
             CaptionDragBounds = new Rectangle(0, 0, CaptionBounds.Width - (buttonwidth * capcontrols.Length), CaptionBounds.Height);
@@ -87,9 +56,11 @@ namespace Metro
         }
         protected override void OnResize(EventArgs e)
         {
+            SetBounds();
+
             base.OnResize(e);
 
-            UpdateBounds();
+            this.Invalidate();
             if (glow != null) glow.Render();
         }
         protected override void OnLocationChanged(EventArgs e)
@@ -245,7 +216,7 @@ namespace Metro
             }
             else if (m.Msg == WinAPI.WM_NCCALCSIZE && m.WParam.ToInt32() == 1)
             {
-                m.Result = new IntPtr(0xF0);
+                m.Result = new IntPtr(0x00);
                 return;
             }
             else if (m.Msg == WinAPI.WM_SYSCOMMAND)
@@ -256,6 +227,54 @@ namespace Metro
             }
 
             base.WndProc(ref m);
+        }
+    }
+
+    public class ColorSchema
+    {
+        public Color
+        cPrimaryLightLight = Color.FromArgb(0x80, 0xCB, 0xEB),
+        cPrimaryLight = Color.FromArgb(0x4F, 0xC8, 0xFC),
+        cPrimary = Color.FromArgb(0x41, 0xB1, 0xE1),
+        cPrimaryDark = Color.FromArgb(0x27, 0x6B, 0x87),
+        cPrimaryDarkDark = Color.FromArgb(0x08, 0x6F, 0x9E),
+
+        cSecondary = Color.FromArgb(0xFF, 0xFF, 0xFF);
+
+        public SolidBrush
+        bCaption,
+        bWindow,
+        bCaptionTitle,
+        bCaptionControls,
+        bCaptionControlsHover,
+        bCaptionControlsActive,
+        bCaptionControlsShadow;
+
+        public Pen
+        pBorder,
+        pCaptionControls,
+        pCaptionControlsActive,
+        pCaptionControlsShadow;
+
+        public ColorSchema()
+        {
+            Update();
+        }
+
+        public void Update()
+        {
+            bCaption = new SolidBrush(cPrimary);
+            bWindow = new SolidBrush(cSecondary);
+            bCaptionTitle = new SolidBrush(cSecondary);
+            bCaptionControls = new SolidBrush(cPrimaryDark);
+            bCaptionControlsHover = new SolidBrush(cPrimaryLightLight);
+            bCaptionControlsActive = new SolidBrush(cPrimaryDarkDark);
+            bCaptionControlsShadow = new SolidBrush(cPrimaryLight);
+
+            pBorder = new Pen(cPrimary);
+            pCaptionControls = new Pen(cPrimaryDark, 2f);
+            pCaptionControlsActive = new Pen(cSecondary, 2f);
+            pCaptionControlsShadow = new Pen(cPrimaryLight, 2f);
         }
     }
 }
