@@ -154,7 +154,6 @@ namespace Metro
         }
 
         const int bordersize = 8;
-        bool nclbtn = false;
         protected override void WndProc(ref Message m)
         {
             if (m.Msg == WinAPI.WM_NCHITTEST)
@@ -163,7 +162,7 @@ namespace Metro
 
                 //System.Diagnostics.Debug.WriteLine(mouse.X + ":" + mouse.Y);
 
-                UpdateCaptionControl(0, (btnClose.Contains(mouse) ? (nclbtn ? 2 : 1) : 0));
+                UpdateCaptionControl(0, (btnClose.Contains(mouse) ? 1 : 0));
 
                 foreach (int b in capcontrols)
                     if (b != 0)
@@ -198,20 +197,17 @@ namespace Metro
             }
             else if (m.Msg == WinAPI.WM_NCMOUSELEAVE)
             {
-                nclbtn = false;
                 for (int i = 0; i < capcontrols.Length; i++) capcontrols[i] = 0;
                 this.Invalidate();
             }
             else if (m.Msg == WinAPI.WM_NCLBUTTONUP)
             {
-                nclbtn = false;
                 for (int i = 0; i < capcontrols.Length; i++)
                     if (capcontrols[i] > 0) capcontrols[i]--;
                 this.Invalidate();
             }
             else if (m.Msg == WinAPI.WM_NCLBUTTONDOWN)
             {
-                nclbtn = true;
                 Point mouse = this.PointToClient(Cursor.Position);
                 UpdateCaptionControl(0, (btnClose.Contains(mouse) ? 2 : 0));
             }
