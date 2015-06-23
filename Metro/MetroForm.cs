@@ -61,7 +61,12 @@ namespace Metro
             base.OnResize(e);
 
             this.Invalidate();
-            if (glow != null) glow.Render();
+            if (glow != null)
+            {
+                if (this.WindowState == FormWindowState.Maximized) glow.WindowState = FormWindowState.Minimized;
+                else if (glow.WindowState == FormWindowState.Minimized) glow.WindowState = FormWindowState.Normal;
+                else glow.Render();
+            }
         }
         protected override void OnLocationChanged(EventArgs e)
         {
