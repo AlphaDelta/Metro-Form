@@ -7,8 +7,8 @@ namespace Metro
 {
     public class MetroForm : Form
     {
-        MetroFormGlow glow = null;
-        ColorSchema ColorSchema = new ColorSchema();
+        public MetroFormGlow glow = null;
+        public ColorSchema ColorSchema = new ColorSchema();
         public MetroForm()
         {
             SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.EnableNotifyMessage, true);
@@ -21,27 +21,27 @@ namespace Metro
             base.OnLoad(e);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Sizable;
 
-            glow = new MetroFormGlow(this);
+            //glow = new MetroFormGlow(this);
             //glow.Show();
             //glow.Render();
             //this.Focus();
         }
 
-        protected override void OnGotFocus(EventArgs e)
-        {
-            base.OnGotFocus(e);
-            glow.Show();
-            glow.Render();
+        //protected override void OnGotFocus(EventArgs e)
+        //{
+        //    base.OnGotFocus(e);
+        //    glow.Show();
+        //    glow.Render();
             
-            //glow.BringToFront();
-            this.BringToFront();
-        }
+        //    //glow.BringToFront();
+        //    this.BringToFront();
+        //}
 
-        protected override void OnLostFocus(EventArgs e)
-        {
-            base.OnLostFocus(e);
-            glow.Hide();
-        }
+        //protected override void OnLostFocus(EventArgs e)
+        //{
+        //    base.OnLostFocus(e);
+        //    glow.Hide();
+        //}
 
         Rectangle CaptionBounds, CaptionDragBounds, WindowBounds, btnClose, btnMaximize, btnMinimize;
         const int buttonsize = 8, buttonwidth = 34, buttonxmid = (buttonwidth / 2 + buttonsize / 2);
@@ -250,6 +250,19 @@ namespace Metro
                 int command = m.WParam.ToInt32() & 0xFFF0;
                 if (command == WinAPI.SC_MINIMIZE) glow.WindowState = FormWindowState.Minimized;
                 else if (command == WinAPI.SC_RESTORE) glow.WindowState = FormWindowState.Normal;
+            }
+            else if (m.Msg == WinAPI.WM_ACTIVATE)
+            {
+                if (m.WParam.ToInt32() == 0)
+                    glow.Hide();
+                else
+                {
+                    glow.Show();
+                    glow.Render();
+
+                    //glow.BringToFront();
+                    this.BringToFront();
+                }
             }
 
             base.WndProc(ref m);

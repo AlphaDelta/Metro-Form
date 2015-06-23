@@ -37,7 +37,7 @@ namespace Metro
             Bitmap bitmap = new Bitmap(ParentForm.Width + glowsize * 2, ParentForm.Height + glowsize * 2);
             using (Graphics g = Graphics.FromImage(bitmap))
             {//new Rectangle(glowsize, glowsize, ParentForm.Width - glowsize * 2, ParentForm.Height - glowsize * 2)
-                g.FillRectangle(new SolidBrush(Color.FromArgb(0x55, 0x41, 0xB1, 0xE1)), new Rectangle(0, 0, bitmap.Width, bitmap.Height));
+                g.FillRectangle(new SolidBrush(Color.FromArgb(0x55, ParentForm.ColorSchema.cPrimary)), new Rectangle(0, 0, bitmap.Width, bitmap.Height));
             }
 
             IntPtr screenDc = WinAPI.GetDC(IntPtr.Zero);

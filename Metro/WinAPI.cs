@@ -10,6 +10,9 @@ namespace Metro
     {
         public const int
         /* WM (Windows Messages) */
+        WM_ACTIVATE = 0x0006,
+        WM_SETFOCUS = 0x0007,
+        WM_KILLFOCUS = 0x0008,
         WM_NCCALCSIZE = 0x83,
         WM_NCHITTEST = 0x84,
         WM_NCLBUTTONDOWN = 0x00A1,

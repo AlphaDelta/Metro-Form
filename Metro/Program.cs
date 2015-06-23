@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace Metro
@@ -13,7 +14,14 @@ namespace Metro
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new TestForm());
+
+            //For some reason the glow has to be initialized outside of the parent form
+            TestForm form = new TestForm();
+            MetroFormGlow glow = new MetroFormGlow(form);
+            form.glow = glow;
+            glow.Show();
+
+            Application.Run(form);
         }
     }
 }
