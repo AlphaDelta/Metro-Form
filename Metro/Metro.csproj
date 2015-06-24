@@ -41,6 +41,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\MetroButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="MetroFormGlow.cs">
       <SubType>Form</SubType>
     </Compile>

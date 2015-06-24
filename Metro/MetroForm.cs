@@ -278,7 +278,11 @@ namespace Metro
         cPrimaryDark = Color.FromArgb(0x27, 0x6B, 0x87),
         cPrimaryDarkDark = Color.FromArgb(0x08, 0x6F, 0x9E),
 
-        cSecondary = Color.FromArgb(0xFF, 0xFF, 0xFF);
+        cSecondary = Color.FromArgb(0xFF, 0xFF, 0xFF),
+        cSecondaryDark = Color.FromArgb(0xF7, 0xF7, 0xF7),
+        cSecondaryDarkMid = Color.FromArgb(0xE0, 0xE0, 0xE0), //Blame MahApps for this, I usually follow the LL L M D DD format
+        cSecondaryDarkDark = Color.FromArgb(0xCC, 0xCC, 0xCC),
+        cSecondaryTextDark = Color.FromArgb(0x00, 0x00, 0x00);
 
         public SolidBrush
         bCaption,
@@ -287,13 +291,18 @@ namespace Metro
         bCaptionControls,
         bCaptionControlsHover,
         bCaptionControlsActive,
-        bCaptionControlsShadow;
+        bCaptionControlsShadow,
+        
+        bControlBackground,
+        bControlBackgroundHover;
 
         public Pen
         pBorder,
         pCaptionControls,
         pCaptionControlsActive,
-        pCaptionControlsShadow;
+        pCaptionControlsShadow,
+        
+        pControlBorder;
 
         public ColorSchema()
         {
@@ -310,10 +319,15 @@ namespace Metro
             bCaptionControlsActive = new SolidBrush(cPrimaryDarkDark);
             bCaptionControlsShadow = new SolidBrush(cPrimaryLight);
 
+            bControlBackground = new SolidBrush(cSecondaryDark);
+            bControlBackgroundHover = new SolidBrush(cSecondaryDarkMid);
+
             pBorder = new Pen(cPrimary);
             pCaptionControls = new Pen(cPrimaryDark, 2f);
             pCaptionControlsActive = new Pen(cSecondary, 2f);
             pCaptionControlsShadow = new Pen(cPrimaryLight, 2f);
+
+            pControlBorder = new Pen(cSecondaryDarkDark);
         }
     }
 }
