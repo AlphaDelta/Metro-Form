@@ -257,11 +257,14 @@ namespace Metro
                     glow.Hide();
                 else
                 {
-                    glow.Show();
-                    glow.Render();
+                    if (this.WindowState != FormWindowState.Maximized)
+                    {
+                        glow.Show();
+                        glow.Render();
 
-                    //glow.BringToFront();
-                    this.BringToFront();
+                        //glow.BringToFront();
+                        this.BringToFront();
+                    }
                 }
             }
 
@@ -271,6 +274,19 @@ namespace Metro
 
     public class ColorSchema
     {
+        public static ColorSchema[] Schemata =
+        {
+            new ColorSchema(), //Light blue (Default)
+            new ColorSchema()  //Red
+            {
+                cPrimaryLightLight = Color.FromArgb(0xFF, 0x84, 0x84),
+                cPrimaryLight = Color.FromArgb(0xFE, 0x5B, 0x5B),
+                cPrimary = Color.FromArgb(0xEA, 0x33, 0x33),
+                cPrimaryDark = Color.FromArgb(0x9E, 0x02, 0x02),
+                cPrimaryDarkDark = Color.FromArgb(0x9E, 0x02, 0x02)
+            },
+        };
+
         public Color
         cPrimaryLightLight = Color.FromArgb(0x80, 0xCB, 0xEB),
         cPrimaryLight = Color.FromArgb(0x4F, 0xC8, 0xFC),
