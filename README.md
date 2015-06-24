@@ -1,9 +1,9 @@
 # Metro-Form
-WinForms implementation of MahApp's WPF Metro theme
+MahApp's WPF Metro theme recreated in WinForms
 
 ### Current state
 
-<img src="http://i.imgur.com/PXddRSc.png" />
+<img src="http://i.imgur.com/qhJzEiT.png" />
 
 * Window incomplete
-* Button control completed
+* Button, ButtonToggle controls completed
