@@ -3,7 +3,7 @@ WinForms implementation of MahApp's WPF Metro theme
 
 ### Current state
 
-<img src="http://i.imgur.com/hFZ1UMR.png" />
+<img src="http://i.imgur.com/PXddRSc.png" />
 
 * Window incomplete
-* No controls completed
+* Button control completed
