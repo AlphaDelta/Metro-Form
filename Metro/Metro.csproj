@@ -44,6 +44,9 @@
     <Compile Include="Controls\MetroButton.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controls\MetroButtonToggle.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="MetroFormGlow.cs">
       <SubType>Form</SubType>
     </Compile>

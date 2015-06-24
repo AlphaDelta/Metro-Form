@@ -8,7 +8,21 @@ namespace Metro
     public class MetroForm : Form
     {
         public MetroFormGlow glow = null;
-        public ColorSchema ColorSchema = new ColorSchema();
+        public ColorSchema _ColorSchema = new ColorSchema();
+
+        public ColorSchema ColorSchema
+        {
+            get { return _ColorSchema; }
+            set
+            {
+                _ColorSchema = value;
+                this.ColorSchema.Update();
+                this.Invalidate();
+                foreach (Control c in this.Controls) c.Invalidate();
+                this.glow.Render();
+            }
+        }
+
         public MetroForm()
         {
             SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.EnableNotifyMessage, true);
@@ -279,6 +293,7 @@ namespace Metro
             new ColorSchema(), //Light blue (Default)
             new ColorSchema()  //Red
             {
+                cPrimaryLightLightLight = Color.FromArgb(0xFD, 0xEA, 0xEA),
                 cPrimaryLightLight = Color.FromArgb(0xFF, 0x84, 0x84),
                 cPrimaryLight = Color.FromArgb(0xFE, 0x5B, 0x5B),
                 cPrimary = Color.FromArgb(0xEA, 0x33, 0x33),
@@ -288,6 +303,7 @@ namespace Metro
         };
 
         public Color
+        cPrimaryLightLightLight = Color.FromArgb(0xEC, 0xF7, 0xFC),
         cPrimaryLightLight = Color.FromArgb(0x80, 0xCB, 0xEB),
         cPrimaryLight = Color.FromArgb(0x4F, 0xC8, 0xFC),
         cPrimary = Color.FromArgb(0x41, 0xB1, 0xE1),
@@ -310,15 +326,17 @@ namespace Metro
         bCaptionControlsShadow,
         
         bControlBackground,
-        bControlBackgroundHover;
+        bControlBackgroundHover,
+        bControlBackgroundActive;
 
         public Pen
         pBorder,
         pCaptionControls,
         pCaptionControlsActive,
         pCaptionControlsShadow,
-        
-        pControlBorder;
+
+        pControlBorder,
+        pControlBorderFocused;
 
         public ColorSchema()
         {
@@ -337,6 +355,7 @@ namespace Metro
 
             bControlBackground = new SolidBrush(cSecondaryDark);
             bControlBackgroundHover = new SolidBrush(cSecondaryDarkMid);
+            bControlBackgroundActive = new SolidBrush(cPrimaryLightLightLight);
 
             pBorder = new Pen(cPrimary);
             pCaptionControls = new Pen(cPrimaryDark, 2f);
@@ -344,6 +363,7 @@ namespace Metro
             pCaptionControlsShadow = new Pen(cPrimaryLight, 2f);
 
             pControlBorder = new Pen(cSecondaryDarkDark);
+            pControlBorderFocused = new Pen(cPrimaryLight);
         }
     }
 }

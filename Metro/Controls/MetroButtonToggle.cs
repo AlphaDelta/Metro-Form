@@ -6,9 +6,9 @@ using System.Windows.Forms;
 
 namespace Metro.Controls
 {
-    public class MetroButton : Button
+    public class MetroButtonToggle : Button
     {
-        public MetroButton()
+        public MetroButtonToggle()
         {
             this.SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer, true);
         }
@@ -37,12 +37,21 @@ namespace Metro.Controls
             IsHovering = false;
         }
 
+        public bool Value = false;
+        protected override void OnClick(EventArgs e)
+        {
+            Value = !Value;
+            this.Invalidate();
+
+            base.OnClick(e);
+        }
+
         protected override void OnPaint(PaintEventArgs e)
         {
-            e.Graphics.FillRectangle((IsHovering ? ParentForm.ColorSchema.bControlBackgroundHover : ParentForm.ColorSchema.bControlBackground), 1, 1, this.Width - 2, this.Height - 2);
-            e.Graphics.DrawRectangle((this.Focused ? ParentForm.ColorSchema.pControlBorderFocused : ParentForm.ColorSchema.pControlBorder), 0, 0, this.Width - 1, this.Height - 1);
+            e.Graphics.FillRectangle((Value ? ParentForm.ColorSchema.bControlBackgroundActive : (IsHovering ? ParentForm.ColorSchema.bControlBackgroundHover : ParentForm.ColorSchema.bControlBackground)), 1, 1, this.Width - 2, this.Height - 2);
+            e.Graphics.DrawRectangle((this.Focused || Value ? ParentForm.ColorSchema.pControlBorderFocused : ParentForm.ColorSchema.pControlBorder), 0, 0, this.Width - 1, this.Height - 1);
 
-            TextRenderer.DrawText(e.Graphics, this.Text, this.Font, new Rectangle(0, 0, this.Width - 1, this.Height - 1), ParentForm.ColorSchema.cSecondaryTextDark, TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter);
+            TextRenderer.DrawText(e.Graphics, this.Text, this.Font, new Rectangle(0, 0, this.Width - 1, this.Height - 1), (Value ? ParentForm.ColorSchema.cPrimary : ParentForm.ColorSchema.cSecondaryTextDark), TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter);
             //base.OnPaint(e);
         }
     }

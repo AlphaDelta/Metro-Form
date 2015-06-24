@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.metroButton1 = new Metro.Controls.MetroButton();
+            this.metroButtonToggle1 = new Metro.Controls.MetroButtonToggle();
             this.SuspendLayout();
             // 
             // metroButton1
@@ -41,11 +42,21 @@
             this.metroButton1.UseVisualStyleBackColor = true;
             this.metroButton1.Click += new System.EventHandler(this.metroButton1_Click);
             // 
+            // metroButtonToggle1
+            // 
+            this.metroButtonToggle1.Location = new System.Drawing.Point(120, 41);
+            this.metroButtonToggle1.Name = "metroButtonToggle1";
+            this.metroButtonToggle1.Size = new System.Drawing.Size(102, 23);
+            this.metroButtonToggle1.TabIndex = 2;
+            this.metroButtonToggle1.Text = "MetroButtonToggle";
+            this.metroButtonToggle1.UseVisualStyleBackColor = true;
+            // 
             // TestForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(460, 253);
+            this.Controls.Add(this.metroButtonToggle1);
             this.Controls.Add(this.metroButton1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "TestForm";
@@ -57,6 +68,7 @@
         #endregion
 
         private Controls.MetroButton metroButton1;
+        private Controls.MetroButtonToggle metroButtonToggle1;
 
 
     }
