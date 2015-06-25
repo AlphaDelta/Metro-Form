@@ -3,7 +3,7 @@ MahApp's WPF Metro theme recreated in WinForms
 
 ### Current state
 
-<img src="http://i.imgur.com/qhJzEiT.png" />
+<img src="http://i.imgur.com/vOkdnwm.png" />
 
 * Window incomplete
-* Button, ButtonToggle controls completed
+* Button, ButtonToggle, CheckBox controls completed
