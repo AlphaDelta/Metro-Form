@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ColorSchema.cs" />
     <Compile Include="Controls\MetroButton.cs">
       <SubType>Component</SubType>
     </Compile>
