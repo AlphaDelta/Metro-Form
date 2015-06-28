@@ -42,7 +42,7 @@ namespace Metro.Controls
             e.Graphics.FillRectangle((IsHovering ? ParentForm.ColorSchema.bControlBackgroundHover : ParentForm.ColorSchema.bControlBackground), 1, 1, this.Width - 2, this.Height - 2);
             e.Graphics.DrawRectangle((this.Focused ? ParentForm.ColorSchema.pControlBorderFocused : ParentForm.ColorSchema.pControlBorder), 0, 0, this.Width - 1, this.Height - 1);
 
-            TextRenderer.DrawText(e.Graphics, this.Text, this.Font, new Rectangle(0, 0, this.Width - 1, this.Height - 1), ParentForm.ColorSchema.cSecondaryTextDark, TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter);
+            TextRenderer.DrawText(e.Graphics, this.Text, this.Font, new Rectangle(0, 0, this.Width - 1, this.Height - 1), (this.Enabled ? ParentForm.ColorSchema.cSecondaryTextDark : ParentForm.ColorSchema.cSecondaryDarkDark), TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter);
             //base.OnPaint(e);
         }
     }

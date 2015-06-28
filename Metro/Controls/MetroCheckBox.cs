@@ -47,7 +47,7 @@ namespace Metro.Controls
             if (this.Checked)
             {
                 int half = (int)Math.Round(this.Height / 2f);
-                Pen check = new Pen(ParentForm.ColorSchema.cPrimary, (this.Height / 6f));
+                Pen check = new Pen((this.Enabled ? ParentForm.ColorSchema.cPrimary : ParentForm.ColorSchema.cSecondaryDarkDark), (this.Height / 6f));
 
                 e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
                 //e.Graphics.DrawLine(check, pading, half, half, this.Height - pading - 1);
@@ -60,7 +60,7 @@ namespace Metro.Controls
                 e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.Default;
             }
 
-            TextRenderer.DrawText(e.Graphics, this.Text, this.Font, new Rectangle(this.Height + 2, 0, this.Width - 1, this.Height - 1), ParentForm.ColorSchema.cSecondaryTextDark, TextFormatFlags.Left | TextFormatFlags.VerticalCenter);
+            TextRenderer.DrawText(e.Graphics, this.Text, this.Font, new Rectangle(this.Height + 2, 0, this.Width - 1, this.Height - 1), (this.Enabled ? ParentForm.ColorSchema.cSecondaryTextDark : ParentForm.ColorSchema.cSecondaryDarkDark), TextFormatFlags.Left | TextFormatFlags.VerticalCenter);
             //base.OnPaint(e);
         }
     }

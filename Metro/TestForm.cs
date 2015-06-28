@@ -15,9 +15,16 @@ namespace Metro
             InitializeComponent();
         }
 
+        int schema = 0;
         private void metroButton1_Click(object sender, EventArgs e)
         {
-            this.ColorSchema = ColorSchema.Schemata[1];
+            schema++;
+            this.ColorSchema = ColorSchema.Schemata[schema % ColorSchema.Schemata.Length];
+        }
+
+        private void metroCheckBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            metroCheckBox2.Checked = metroCheckBox1.Checked;
         }
     }
 }
